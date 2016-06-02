@@ -13,6 +13,8 @@ public:
   Rom(const std::string &file_path);
   ~Rom();
 
+  Chr& chr() const;
+
 private:
   std::vector<uint8_t> data_;
   std::unique_ptr<Header> header_;

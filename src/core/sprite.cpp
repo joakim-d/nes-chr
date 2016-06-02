@@ -5,3 +5,15 @@ width_(width), height_(height), pixels_(std::move(pixels))
 {
 
 }
+
+uint32_t Sprite::width() const {
+  return width_;
+}
+
+uint32_t Sprite::height() const {
+  return height_;
+}
+
+uint8_t* Sprite::data(){
+  return pixels_.data();
+}

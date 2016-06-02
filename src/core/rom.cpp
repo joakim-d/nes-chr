@@ -26,3 +26,7 @@ Rom::Rom(const std::string &file_path) {
 }
 
 Rom::~Rom() = default;
+
+Chr& Rom::chr() const {
+  return *chr_;
+}

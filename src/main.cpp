@@ -2,7 +2,9 @@
 #include <cerrno>
 
 #include "core/rom.h"
+#include "core/chr.h"
 #include "gfx/renderer.h"
+#include "views/paintview.h"
 
 int main(int argc, char *argv[]){
   if(argc < 2){
@@ -15,6 +17,14 @@ int main(int argc, char *argv[]){
   try {
     Rom rom(file_path);
     Renderer renderer;
+
+    auto paintView = new PaintView;
+    ViewUPtr view(paintView);
+    renderer.setView(std::move(view));
+    paintView->setNesSprites(rom.chr().sprites());
+
+
+
     renderer.run();
   }
   catch(std::exception &e){
