@@ -24,7 +24,7 @@ View::Action PaintView::render() {
     r->renderTexture(texture, src_rect, dst_rect);
 
     x += 8;
-    if(x == 160){
+    if(x == 128){
       y += 8;
       x = 0;
     }

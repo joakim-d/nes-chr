@@ -13,8 +13,8 @@ public:
     for(int i = 0; i < 4; i++){
       colours[i].a = 255;
       colours[i].r = i * 85;
-      colours[i].g = 0;//i * 85;
-      colours[i].b = 0;//i * 85;
+      colours[i].g = i * 85;
+      colours[i].b = i * 85;
     }
 
     SDL_SetPaletteColors(surface->format->palette, colours, 0, 4);
