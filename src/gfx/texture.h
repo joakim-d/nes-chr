@@ -6,6 +6,7 @@
 class Renderer;
 class Sprite;
 class SDL_Texture;
+class Rect;
 /*!
  * \brief The Texture class
  */
@@ -20,6 +21,10 @@ public:
   Texture& operator=(Texture &&rhs);
 
   SDL_Texture* rawTexture() const;
+
+  void setDstRect(Rect &&dst_rect);
+  const Rect& srcRect() const;
+  const Rect& dstRect() const;
 private:
   class TexturePrivate;
   std::unique_ptr<TexturePrivate> d_;

@@ -21,11 +21,13 @@ public:
   Renderer();
   ~Renderer();
 
-  void run();
+  bool render();
   void setView(ViewUPtr &&view);
 
   void renderTexture(const Texture& texture);
   void renderTexture(const Texture &texture, const Rect &src, const Rect &dst);
+  void drawFillRect(Rect &&rect);
+  void setDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
   SDL_Renderer *rawRenderer();
 
 private:

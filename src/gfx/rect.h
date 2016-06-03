@@ -16,6 +16,12 @@ public:
   Rect(int32_t x, int32_t y, int32_t width, int32_t height);
   ~Rect();
 
+  Rect(Rect &&rhs);
+  Rect(const Rect &c);
+
+  Rect & operator =(Rect &&rect);
+  Rect & operator =(const Rect &rect);
+
   SDL_Rect &rect() const;
 private:
   class RectPrivate;

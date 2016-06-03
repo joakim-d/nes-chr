@@ -1,12 +1,13 @@
 #include "texture.h"
 #include "renderer.h"
+#include "rect.h"
 
 #include "../core/sprite.h"
 #include <SDL2/SDL.h>
 
 class Texture::TexturePrivate {
 public:
-  TexturePrivate(Renderer &renderer, Sprite &sprite){
+  TexturePrivate(Renderer &renderer, Sprite &sprite) : src_rect_(0,0,8,8), dst_rect_(0,0,8,8){
     SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(sprite.data(), sprite.width(), sprite.height(), 8, sprite.width(), 0, 0, 0, 0);
 
     SDL_Color colours[4];
@@ -30,6 +31,8 @@ public:
   }
 
   SDL_Texture *texture_{};
+  Rect src_rect_;
+  Rect dst_rect_;
 };
 
 Texture::Texture(Renderer &renderer, Sprite &sprite) : d_(new TexturePrivate(renderer, sprite)){}
@@ -45,4 +48,16 @@ Texture::~Texture() = default;
 
 SDL_Texture* Texture::rawTexture() const {
   return d_->texture_;
+}
+
+const Rect & Texture::srcRect() const {
+  return d_->src_rect_;
+}
+
+const Rect & Texture::dstRect() const {
+  return d_->dst_rect_;
+}
+
+void Texture::setDstRect(Rect &&dst_rect) {
+  d_->dst_rect_ = std::move(dst_rect);
 }

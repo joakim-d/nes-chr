@@ -6,6 +6,7 @@
 
 class Sprite {
 public:
+  Sprite();
   Sprite(uint32_t width, uint32_t height, const uint8_t *raw_chr_data);
   Sprite(uint32_t width, uint32_t height, std::vector<uint8_t> &&pixels);
 

@@ -3,7 +3,7 @@
 
 #include <memory>
 
-class Renderer;
+class Engine;
 class View;
 using ViewUPtr = std::unique_ptr<View>;
 
@@ -14,9 +14,9 @@ using ViewUPtr = std::unique_ptr<View>;
 
 class View {
 public:
-  class Action;
+  View(Engine& engine);
 
-  void setRenderer(Renderer *renderer);
+  class Action;
   virtual Action render() = 0;
 
   class Action {
@@ -38,10 +38,10 @@ public:
   };
 
 protected:
-  Renderer *renderer() const;
+  Engine &engine() const;
 
 private:
-  Renderer *renderer_{};
+  Engine &engine_;
 };
 
 

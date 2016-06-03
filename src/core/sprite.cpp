@@ -1,6 +1,8 @@
 #include "sprite.h"
 #include <string.h>
 
+Sprite::Sprite(){}
+
 Sprite::Sprite(uint32_t width, uint32_t height, const uint8_t *raw_chr_data) :
   width_(width), height_(height)
 {
