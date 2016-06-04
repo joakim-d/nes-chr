@@ -17,7 +17,8 @@ public:
   }
 
   SDL_Keycode key_code{};
-  bool pressed{};
+  bool on{}; //< true if the key is pressed
+  bool pressed{}; //< true if the key was just pressed
   bool released{}; //< true if the key was just released
 };
 

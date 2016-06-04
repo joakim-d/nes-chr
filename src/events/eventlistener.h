@@ -3,6 +3,8 @@
 
 #include <map>
 #include "keyboardevent.h"
+#include "mouseevent.h"
+
 /*!
  * \brief The EventsListener class
  */
@@ -15,9 +17,11 @@ public:
 
   bool quit() const;
   const KeyboardEvent &keyboardEvent(SDL_Keycode code) const;
+  const MouseEvent &mouseEvent() const;
 
 private:
   std::map<SDL_Keycode, KeyboardEvent> key_events_;
+  MouseEvent mouse_event_;
   bool quit_{};
 };
 

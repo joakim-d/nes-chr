@@ -10,6 +10,7 @@ class SDL_Renderer;
 class Texture;
 
 class Rect;
+class Color;
 
 /*!
  * \brief The Renderer class
@@ -26,8 +27,10 @@ public:
 
   void renderTexture(const Texture& texture);
   void renderTexture(const Texture &texture, const Rect &src, const Rect &dst);
+  void drawFillRect(const Rect &rect);
   void drawFillRect(Rect &&rect);
   void setDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+  void setDrawColor(const Color &color);
   SDL_Renderer *rawRenderer();
 
 private:

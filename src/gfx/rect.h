@@ -2,9 +2,10 @@
 #define idE10DBBA14779488A99EA170C3879B653_H
 
 #include <memory>
+#include <vector>
 
 class SDL_Rect;
-
+class Pos;
 /*!
  * \brief The Rect class
  */
@@ -13,6 +14,7 @@ class SDL_Rect;
 
 class Rect {
 public:
+  Rect();
   Rect(int32_t x, int32_t y, int32_t width, int32_t height);
   ~Rect();
 
@@ -23,6 +25,9 @@ public:
   Rect & operator =(const Rect &rect);
 
   SDL_Rect &rect() const;
+
+  bool contains(const Pos& pos) const;
+  std::vector<Rect> split(uint32_t w, uint32_t h) const;
 private:
   class RectPrivate;
   std::unique_ptr<RectPrivate> d_;

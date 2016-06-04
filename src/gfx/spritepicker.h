@@ -14,7 +14,7 @@ class Sprite;
 
 class SpritePicker {
 public:
-  SpritePicker(Engine &engine, std::vector<Sprite> &sprites);
+  SpritePicker(Engine &engine, std::vector<Sprite> &sprites, Palette &palette);
 
   void setSprites(std::vector<Sprite> &sprites);
   Sprite& currentSprite();
@@ -27,6 +27,7 @@ private:
   std::vector<Sprite> &sprites_;
   std::vector<Texture> textures_;
   int32_t index_{};
+  Palette &palette_;
 };
 
 #endif // idE64112F9834946D0AB6270D44BBF1A52_H

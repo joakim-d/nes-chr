@@ -1,8 +1,11 @@
 #include "renderer.h"
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+
 #include "texture.h"
 #include "rect.h"
+#include "color.h"
 #include "../views/view.h"
 
 class Renderer::RendererPrivate {
@@ -10,6 +13,10 @@ public:
   RendererPrivate(){
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
       throw std::runtime_error("Failed to initialize SDL");
+    }
+
+    if (TTF_Init() != 0) {
+      throw std::runtime_error("Failed to initialize TTF");
     }
 
     window_ = SDL_CreateWindow("nes-chr++", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
@@ -81,10 +88,18 @@ void Renderer::renderTexture(const Texture &texture, const Rect &src, const Rect
   SDL_RenderCopy(d_->renderer_, texture.rawTexture(), &src.rect(), &dst.rect());
 }
 
+void Renderer::drawFillRect(const Rect &rect){
+  SDL_RenderFillRect(d_->renderer_, &rect.rect());
+}
+
 void Renderer::drawFillRect(Rect &&rect) {
   SDL_RenderFillRect(d_->renderer_, &rect.rect());
 }
 
 void Renderer::setDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a){
   SDL_SetRenderDrawColor(d_->renderer_, r, g, b, a);
+}
+
+void Renderer::setDrawColor(const Color &c){
+  SDL_SetRenderDrawColor(d_->renderer_, c.r, c.g, c.b, c.a);
 }

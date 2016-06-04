@@ -6,6 +6,8 @@
 
 #include <vector>
 #include "../gfx/spriteeditor.h"
+#include "../gfx/palette.h"
+#include "../gfx/colorpicker.h"
 
 class SpritePicker;
 
@@ -22,11 +24,13 @@ public:
   virtual View::Action render() override;
 
 private:
+  ColorPicker color_picker_;
   SpriteEditor sprite_editor_;
   std::unique_ptr<SpritePicker> sprite_picker_;
   std::vector<Sprite> sprites_;
   uint32_t current_texture_index_{};
   uint32_t current_color_{};
+  Palette palette_;
 };
 
 #endif // id75221EC6877A410DA87FEF48B7A8AE47_H

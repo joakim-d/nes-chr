@@ -12,6 +12,10 @@ class Pos {
 public:
   Pos(){}
   Pos(int32_t x, int32_t y) : x(x), y(y){}
+
+  Pos& operator+=(const Pos& rhs);
+  Pos& operator-=(const Pos& rhs);
+
   int32_t x{};
   int32_t y{};
 };

@@ -7,7 +7,8 @@
 #include "../events/eventlistener.h"
 #include <SDL2/SDL_render.h>
 
-SpritePicker::SpritePicker(Engine &engine, std::vector<Sprite> &sprites) : engine_(engine), sprites_(sprites){
+SpritePicker::SpritePicker(Engine &engine, std::vector<Sprite> &sprites, Palette &palette) :
+  engine_(engine), sprites_(sprites), palette_(palette){
   refresh();
 }
 
@@ -18,20 +19,20 @@ void SpritePicker::setSprites(std::vector<Sprite> &sprites) {
 
 void SpritePicker::handleEvents() {
   auto &events_listener = engine_.eventsListener();
-  if(events_listener.keyboardEvent(SDLK_UP).released){
+  if(events_listener.keyboardEvent(SDLK_UP).pressed){
     if(index_ - 16 >= 0){
       index_ -= 16;
     }
   }
-  else if (events_listener.keyboardEvent(SDLK_DOWN).released){
+  if (events_listener.keyboardEvent(SDLK_DOWN).pressed){
     if(index_ + 16 < sprites_.size()){
       index_ += 16;
     }
   }
-  else if (events_listener.keyboardEvent(SDLK_LEFT).released){
+  if (events_listener.keyboardEvent(SDLK_LEFT).pressed){
     index_--;
   }
-  else if (events_listener.keyboardEvent(SDLK_RIGHT).released){
+  if (events_listener.keyboardEvent(SDLK_RIGHT).pressed){
     index_++;
   }
 
@@ -54,7 +55,7 @@ void SpritePicker::render() {
   for(auto &texture : textures_){
     if(index == index_){
       engine_.renderer().setDrawColor(0, 255, 0, 255);
-      engine_.renderer().drawFillRect(Rect(x - 2, y - 2, 20, 20));
+      engine_.renderer().drawFillRect(std::move(Rect(x - 2, y - 2, 20, 20)));
     }
 
     texture.setDstRect(Rect (x, y, 16, 16));
@@ -72,7 +73,7 @@ void SpritePicker::render() {
 void SpritePicker::refresh(){
   textures_.clear();
   for(auto &sprite : sprites_){
-    textures_.push_back(Texture(engine_.renderer(), sprite));
+    textures_.push_back(Texture(engine_.renderer(), sprite, palette_));
   }
 }
 

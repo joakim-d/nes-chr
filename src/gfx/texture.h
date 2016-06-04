@@ -7,6 +7,7 @@ class Renderer;
 class Sprite;
 class SDL_Texture;
 class Rect;
+class Palette;
 /*!
  * \brief The Texture class
  */
@@ -14,7 +15,9 @@ class Rect;
 
 class Texture {
 public:
-  Texture(Renderer &renderer, Sprite &sprite);
+
+  Texture(Renderer &renderer, Sprite &sprite, Palette &palette);
+  Texture(SDL_Texture* texture);
   ~Texture();
 
   Texture(Texture &&rhs);
