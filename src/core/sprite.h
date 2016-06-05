@@ -15,7 +15,9 @@ public:
 
   uint8_t* data();
 
+  std::vector<uint8_t> toChrData() const;
 private:
+
   uint32_t width_{};
   uint32_t height_{};
   std::vector<uint8_t> pixels_;

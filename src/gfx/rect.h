@@ -28,6 +28,7 @@ public:
 
   bool contains(const Pos& pos) const;
   std::vector<Rect> split(uint32_t w, uint32_t h) const;
+  void adjust(int32_t pixels);
 private:
   class RectPrivate;
   std::unique_ptr<RectPrivate> d_;

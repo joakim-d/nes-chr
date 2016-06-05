@@ -39,3 +39,25 @@ uint32_t Sprite::height() const {
 uint8_t* Sprite::data(){
   return pixels_.data();
 }
+
+std::vector<uint8_t> Sprite::toChrData() const {
+  std::vector<uint8_t> chr_data(16, 0);
+
+  uint64_t first_line = 0;
+  uint64_t second_line = 0;
+
+  for (auto y = 0; y < 8; y++){
+    for (auto x = 0; x < 8; x++){
+      if(pixels_[y * 8 + x] & 1){
+        first_line |= static_cast<uint64_t>(1) << (y * 8 + (7 - x));
+      }
+      if(pixels_[y * 8 + x] & 2){
+        second_line |= static_cast<uint64_t>(1) << (y * 8 + (7 - x));
+      }
+    }
+  }
+
+  memcpy(chr_data.data(), &first_line, 8);
+  memcpy(chr_data.data() + 8, &second_line, 8);
+  return chr_data;
+}

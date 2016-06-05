@@ -97,6 +97,18 @@ public:
   }
 
   void handleEvents(){
+    if(engine_.eventsListener().keyboardEvent(SDLK_0).pressed){
+      selected_palette_index_ = 0;
+    }
+    else if(engine_.eventsListener().keyboardEvent(SDLK_1).pressed){
+      selected_palette_index_ = 1;
+    }
+    if(engine_.eventsListener().keyboardEvent(SDLK_2).pressed){
+      selected_palette_index_ = 2;
+    }
+    if(engine_.eventsListener().keyboardEvent(SDLK_3).pressed){
+      selected_palette_index_ = 3;
+    }
     auto mouse_event(engine_.eventsListener().mouseEvent());
     if(mouse_event.left_click){
       auto index = 0;
@@ -122,6 +134,11 @@ public:
   }
 
   void render(){
+    engine_.renderer().setDrawColor(Color(0,255,0));
+    auto rect(palette_rects_[selected_palette_index_].rect_);
+    rect.adjust(2);
+    engine_.renderer().drawFillRect(rect);
+
     for(auto i = 0; i < 4; i++){
       engine_.renderer().setDrawColor(palette_[i]);
       engine_.renderer().drawFillRect(palette_rects_[i].rect_);

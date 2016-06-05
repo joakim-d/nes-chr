@@ -11,6 +11,13 @@ file(COPY ${RESOURCES}
     DESTINATION ${CMAKE_BINARY_DIR}/resources
     )
 
+option(ASAN "Activate compilation with ASAN")
+
+if(ASAN)
+    message(STATUS "ASAN ON!")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+endif()
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} -L/usr/lib/x86_64-linux-gnu/

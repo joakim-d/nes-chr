@@ -70,3 +70,10 @@ std::vector<Rect> Rect::split(uint32_t cols, uint32_t rows) const {
   }
   return d_->split(cols, rows);
 }
+
+void Rect::adjust(int32_t pixels) {
+  d_->rect_.x -= pixels;
+  d_->rect_.y -= pixels;
+  d_->rect_.w += 2 * pixels;
+  d_->rect_.h += 2 * pixels;
+}

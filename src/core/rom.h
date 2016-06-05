@@ -14,8 +14,12 @@ public:
   ~Rom();
 
   Chr& chr() const;
+  void save();
 
 private:
+  void applyChanges();
+
+  std::string file_path_;
   std::vector<uint8_t> data_;
   std::unique_ptr<Header> header_;
   std::unique_ptr<Chr> chr_;

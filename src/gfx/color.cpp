@@ -12,3 +12,7 @@ SDL_Color Color::toSDLColor() const {
   color.a = a;
   return color;
 }
+
+bool Color::operator !=(const Color &rhs) const{
+  return rhs.r != r || rhs.g != g || rhs.b != b || rhs.a != a;
+}

@@ -19,10 +19,9 @@ int main(int argc, char *argv[]){
     Rom rom(file_path);
     Engine engine;
 
-    auto paintView = new PaintView(engine);
+    auto paintView = new PaintView(engine, rom);
     ViewUPtr view(paintView);
     engine.renderer().setView(std::move(view));
-    paintView->setNesSprites(rom.chr().sprites());
 
     engine.run();
   }

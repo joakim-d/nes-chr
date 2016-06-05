@@ -15,7 +15,7 @@ class Texture;
 
 class SpriteEditor {
 public:
-  SpriteEditor(Engine &engine, Palette &palette);
+  SpriteEditor(Engine &engine, Palette &palette, Sprite &sprite);
 
   void setSprite(Sprite &sprite);
   void handleEvents();
@@ -26,7 +26,7 @@ public:
 
 private:
   Engine &engine_;
-  Sprite sprite_;
+  Sprite *sprite_;
   std::unique_ptr<Texture> sprite_texture_;
   Pos pos_;
   int32_t hovered_pixel_idx_{-1};

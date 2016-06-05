@@ -15,6 +15,11 @@ Engine::Engine() : d_(new EnginePrivate){
   d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_DOWN));
   d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_LEFT));
   d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_RIGHT));
+  d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_0));
+  d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_1));
+  d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_2));
+  d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_3));
+  d_->events_listener_.addKeyboardEvent(KeyboardEvent(SDLK_s));
 }
 
 Engine::~Engine() = default;
@@ -34,7 +39,7 @@ void Engine::run() {
       break;
     }
 
-    SDL_Delay(40);
+    SDL_Delay(16);
   }
 
 }

@@ -52,6 +52,9 @@ void SpritePicker::render() {
   int y = 0;
 
   int index = 0;
+
+  textures_[index_] = Texture(engine_.renderer(), sprites_[index_], palette_);
+
   for(auto &texture : textures_){
     if(index == index_){
       engine_.renderer().setDrawColor(0, 255, 0, 255);

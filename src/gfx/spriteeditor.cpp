@@ -7,27 +7,32 @@
 #include "../engine/engine.h"
 #include "../events/eventlistener.h"
 
+#include <iostream>
+
 
 const int BORDER_SIZE = 16;
 const int FRAME_SIZE = 256;
 const int PIXEL_SIZE = 32;
 
-SpriteEditor::SpriteEditor(Engine &engine, Palette& palette) : engine_(engine), palette_(palette){}
+SpriteEditor::SpriteEditor(Engine &engine, Palette& palette, Sprite &sprite) : engine_(engine), palette_(palette), sprite_(&sprite){}
 
 void SpriteEditor::handleEvents(){
-  auto mouse_pos(engine_.eventsListener().mouseEvent().pos);
+  auto mouse_event(engine_.eventsListener().mouseEvent());
 
-  mouse_pos -= pos_;
-  mouse_pos -= Pos(BORDER_SIZE / 2, BORDER_SIZE / 2);
+  mouse_event.pos -= pos_;
+  mouse_event.pos -= Pos(BORDER_SIZE / 2, BORDER_SIZE / 2);
 
-  if(Rect(0, 0, 256, 256).contains(mouse_pos)){
+  if(Rect(0, 0, 256, 256).contains(mouse_event.pos)){
     auto rects(Rect(0,0,256,256).split(8, 8));
     hovered_pixel_idx_ = 0;
     for(const auto &rect : rects){
-      if(rect.contains(mouse_pos)){
+      if(rect.contains(mouse_event.pos)){
         break;
       }
       hovered_pixel_idx_++;
+    }
+    if(mouse_event.left_click){
+      *(sprite_->data() + hovered_pixel_idx_) = current_color_idx_;
     }
   }
   else{
@@ -51,8 +56,8 @@ void SpriteEditor::render(){
 }
 
 void SpriteEditor::setSprite(Sprite &sprite) {
-  sprite_ = sprite;
-  sprite_texture_.reset(new Texture(engine_.renderer(), sprite_, palette_));
+  sprite_ = &sprite;
+  sprite_texture_.reset(new Texture(engine_.renderer(), *sprite_, palette_));
   sprite_texture_->setDstRect(Rect(pos_.x + BORDER_SIZE / 2, pos_.y + BORDER_SIZE / 2, FRAME_SIZE, FRAME_SIZE));
 }
 

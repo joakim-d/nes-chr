@@ -10,6 +10,7 @@
 #include "../gfx/colorpicker.h"
 
 class SpritePicker;
+class Rom;
 
 /*!
  * \brief The PaintView class
@@ -18,18 +19,16 @@ class SpritePicker;
 
 class PaintView : public View {
 public:
-  PaintView(Engine &engine);
+  PaintView(Engine &engine, Rom& rom);
   ~PaintView();
-  void setNesSprites(const std::vector<Sprite> &sprites);
   virtual View::Action render() override;
 
 private:
+  Rom& rom_;
+  std::vector<Sprite> &sprites_;
   ColorPicker color_picker_;
   SpriteEditor sprite_editor_;
   std::unique_ptr<SpritePicker> sprite_picker_;
-  std::vector<Sprite> sprites_;
-  uint32_t current_texture_index_{};
-  uint32_t current_color_{};
   Palette palette_;
 };
 
