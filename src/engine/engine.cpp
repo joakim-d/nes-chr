@@ -33,6 +33,7 @@ EventsListener& Engine::eventsListener() const {
 }
 
 void Engine::run() {
+  d_->renderer_.render();
   while(true){
     bool new_event = d_->events_listener_.listen();
     if(new_event && d_->renderer_.render()) {
