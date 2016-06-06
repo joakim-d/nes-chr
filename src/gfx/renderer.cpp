@@ -51,7 +51,7 @@ Renderer::~Renderer() = default;
 
 bool Renderer::render(){
   bool quit = false;
-  setDrawColor(32, 26, 30, 255);
+  setDrawColor(52, 46, 50, 255);
   SDL_RenderClear(d_->renderer_);
 
   if(d_->view_.get()){

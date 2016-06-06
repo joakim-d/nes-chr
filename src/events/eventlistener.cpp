@@ -7,7 +7,8 @@ void EventsListener::addKeyboardEvent(const KeyboardEvent &event){
   key_events_.insert(std::pair<SDL_Keycode, KeyboardEvent>(event.key_code, event));
 }
 
-void EventsListener::listen(){
+bool EventsListener::listen(){
+  bool new_event = false;
   SDL_Event event;
   for(auto &key_event : key_events_){
     key_event.second.released = false;
@@ -17,6 +18,7 @@ void EventsListener::listen(){
     switch(event.type){
     case SDL_KEYDOWN:
     {
+      new_event = true;
       auto key_it = key_events_.find(event.key.keysym.sym);
       if(key_it != key_events_.end()){
         key_it->second.pressed = true;
@@ -27,6 +29,7 @@ void EventsListener::listen(){
 
     case SDL_KEYUP:
     {
+      new_event = true;
       auto key_it = key_events_.find(event.key.keysym.sym);
       if(key_it != key_events_.end()){
         key_it->second.on = false;
@@ -36,10 +39,12 @@ void EventsListener::listen(){
       break;
 
     case SDL_QUIT:
+      new_event = true;
       quit_ = true;
       break;
 
     case SDL_MOUSEBUTTONDOWN:
+      new_event = true;
       switch(event.button.button){
       case SDL_BUTTON_LEFT:
         mouse_event_.left_click = true;
@@ -53,6 +58,7 @@ void EventsListener::listen(){
       break;
 
     case SDL_MOUSEBUTTONUP:
+      new_event = true;
       switch(event.button.button){
       case SDL_BUTTON_LEFT:
         mouse_event_.left_click = false;
@@ -66,11 +72,16 @@ void EventsListener::listen(){
       break;
 
     case SDL_MOUSEMOTION:
+      new_event = true;
       mouse_event_.pos.x = event.motion.x;
       mouse_event_.pos.y = event.motion.y;
       break;
+
+    default:
+      break;
     }
   }
+  return new_event;
 }
 
 bool EventsListener::quit() const {

@@ -34,8 +34,8 @@ EventsListener& Engine::eventsListener() const {
 
 void Engine::run() {
   while(true){
-    d_->events_listener_.listen();
-    if(d_->renderer_.render()) {
+    bool new_event = d_->events_listener_.listen();
+    if(new_event && d_->renderer_.render()) {
       break;
     }
 

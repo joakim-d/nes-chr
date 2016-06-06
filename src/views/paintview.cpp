@@ -1,13 +1,13 @@
 #include "paintview.h"
-#include "../gfx/colorpicker.h"
-#include "../gfx/renderer.h"
-#include "../gfx/rect.h"
-#include "../gfx/spritepicker.h"
-#include "../gfx/pos.h"
-#include "../engine/engine.h"
-#include "../events/eventlistener.h"
+
 #include "../core/rom.h"
 #include "../core/chr.h"
+#include "../engine/engine.h"
+#include "../events/eventlistener.h"
+#include "../gfx/renderer.h"
+#include "../gfx/rect.h"
+#include "../gfx/pos.h"
+#include "../widgets/spritepicker.h"
 
 PaintView::PaintView(Engine &engine, Rom &rom) : View(engine),
   rom_(rom),
@@ -15,11 +15,12 @@ PaintView::PaintView(Engine &engine, Rom &rom) : View(engine),
   sprite_editor_(engine, palette_, sprites_[0]),
   color_picker_(engine, palette_)
 {
-  sprite_editor_.setGlobalPos(Pos(16, 16));
-  color_picker_.setGlobalPos(Pos(16, 400));
+  sprite_editor_.setGlobalPos(Pos(32, 16));
+  color_picker_.setGlobalPos(Pos(32, 320));
   color_picker_.initPalette();
 
   sprite_picker_.reset(new SpritePicker(engine, sprites_, palette_));
+  sprite_picker_->setGlobalPos(Pos(380, 16));
 }
 
 PaintView::~PaintView(){}

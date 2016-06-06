@@ -1,9 +1,9 @@
 #include "colorpicker.h"
 
-#include "palette.h"
-#include "rect.h"
-#include "renderer.h"
-#include "textgenerator.h"
+#include "../gfx/palette.h"
+#include "../gfx/rect.h"
+#include "../gfx/renderer.h"
+#include "../gfx/textgenerator.h"
 #include "../engine/engine.h"
 #include "../events/eventlistener.h"
 
@@ -90,10 +90,10 @@ public:
     colors_[62] = Color(0,0,0);
     colors_[63] = Color(0,0,0);
 
-    number_textures_.push_back(text_generator_.textureFromText("0", Color(0,0,0)));
-    number_textures_.push_back(text_generator_.textureFromText("1", Color(0,0,0)));
-    number_textures_.push_back(text_generator_.textureFromText("2", Color(0,0,0)));
-    number_textures_.push_back(text_generator_.textureFromText("3", Color(0,0,0)));
+    number_textures_.push_back(text_generator_.textureFromText("0", Color(220,220,220)));
+    number_textures_.push_back(text_generator_.textureFromText("1", Color(220,220,220)));
+    number_textures_.push_back(text_generator_.textureFromText("2", Color(220,220,220)));
+    number_textures_.push_back(text_generator_.textureFromText("3", Color(220,220,220)));
   }
 
   void handleEvents(){

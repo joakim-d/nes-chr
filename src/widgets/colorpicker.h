@@ -2,7 +2,7 @@
 #define id510DEB9FFA554300A13C8D69E08AB8C2_H
 
 #include <memory>
-#include "pos.h"
+#include "../gfx/pos.h"
 
 class Engine;
 class Palette;

@@ -5,9 +5,9 @@
 #include "../core/sprite.h"
 
 #include <vector>
-#include "../gfx/spriteeditor.h"
 #include "../gfx/palette.h"
-#include "../gfx/colorpicker.h"
+#include "../widgets/spriteeditor.h"
+#include "../widgets/colorpicker.h"
 
 class SpritePicker;
 class Rom;

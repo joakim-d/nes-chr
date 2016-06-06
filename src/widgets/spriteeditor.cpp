@@ -1,14 +1,14 @@
 #include "spriteeditor.h"
-#include "texture.h"
-#include "rect.h"
-#include "renderer.h"
-#include "palette.h"
 #include "../core/sprite.h"
 #include "../engine/engine.h"
 #include "../events/eventlistener.h"
+#include "../gfx/texture.h"
+#include "../gfx/rect.h"
+#include "../gfx/renderer.h"
+#include "../gfx/palette.h"
+
 
 #include <iostream>
-
 
 const int BORDER_SIZE = 16;
 const int FRAME_SIZE = 256;

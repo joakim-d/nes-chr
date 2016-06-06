@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "../core/sprite.h"
-#include "pos.h"
+#include "../gfx/pos.h"
 
 class Engine;
 class Palette;

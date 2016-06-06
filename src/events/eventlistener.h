@@ -13,7 +13,7 @@
 class EventsListener {
 public:
   void addKeyboardEvent(const KeyboardEvent &event);
-  void listen();
+  bool listen();
 
   bool quit() const;
   const KeyboardEvent &keyboardEvent(SDL_Keycode code) const;
