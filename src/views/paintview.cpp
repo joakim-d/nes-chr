@@ -9,9 +9,23 @@
 #include "../gfx/pos.h"
 #include "../widgets/spritepicker.h"
 
-PaintView::PaintView(Engine &engine, Rom &rom) : View(engine),
-  rom_(rom),
-  sprites_(rom_.chr().sprites()),
+PaintView::PaintView(Engine &engine, std::unique_ptr<Rom> &&rom) : View(engine),
+  rom_(std::move(rom)),
+  sprites_(rom_->chr().sprites()),
+  sprite_editor_(engine, palette_, sprites_[0]),
+  color_picker_(engine, palette_)
+{
+  sprite_editor_.setGlobalPos(Pos(32, 16));
+  color_picker_.setGlobalPos(Pos(32, 320));
+  color_picker_.initPalette();
+
+  sprite_picker_.reset(new SpritePicker(engine, sprites_, palette_));
+  sprite_picker_->setGlobalPos(Pos(380, 16));
+}
+
+PaintView::PaintView(Engine &engine, std::unique_ptr<Chr> &&chr) : View(engine),
+  chr_(std::move(chr)),
+  sprites_(chr_->sprites()),
   sprite_editor_(engine, palette_, sprites_[0]),
   color_picker_(engine, palette_)
 {
@@ -30,7 +44,12 @@ View::Action PaintView::render() {
     return View::Action(View::Action::QUIT);
   }
   if(engine().eventsListener().keyboardEvent(SDLK_s).pressed){
-    rom_.save();
+    if(rom_){
+      rom_->save();
+    }
+    else if(chr_){
+      chr_->save();
+    }
   }
 
   if(sprite_picker_){

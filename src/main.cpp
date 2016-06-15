@@ -9,18 +9,34 @@
 
 int main(int argc, char *argv[]){
   if(argc < 2){
-    std::cout << "Usage : " << argv[0] << " " << "rom_file" << std::endl;
+    std::cout << "Usage : " << argv[0] << " [options] " << "file" << std::endl;
+    std::cout << "\t\toptions:" << std::endl;
+    std::cout << "\t\t\t\t--chr \t\t open as CHR file" << std::endl;
     return -1;
   }
 
-  std::string file_path(argv[1]);
+  bool chr = false;
+
+  for(int i = 1; i < argc - 1; i++){
+    if(std::string(argv[i]) == "--chr"){
+      chr = true;
+    }
+  }
+
+  std::string file_path(argv[argc - 1]);
 
   try {
-    Rom rom(file_path);
+    PaintView *paint_view = nullptr;
     Engine engine;
 
-    auto paintView = new PaintView(engine, rom);
-    ViewUPtr view(paintView);
+    if(chr){
+      paint_view = new PaintView(engine, std::unique_ptr<Chr> (new Chr(file_path)));
+    }
+    else {
+      paint_view = new PaintView(engine, std::unique_ptr<Rom> (new Rom(file_path)));
+    }
+
+    ViewUPtr view(paint_view);
     engine.renderer().setView(std::move(view));
 
     engine.run();

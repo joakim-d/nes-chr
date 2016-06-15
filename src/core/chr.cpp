@@ -3,6 +3,26 @@
 #include <stdexcept>
 #include <string.h>
 #include <iostream>
+#include <fstream>
+
+using namespace std;
+
+Chr::Chr(const std::string &file_path) : file_path_(file_path) {
+  ifstream ifs(file_path, ios::binary|ios::ate);
+
+  if(!ifs.is_open()){
+    throw runtime_error("Failed to open " + file_path);
+  }
+
+  ifstream::pos_type pos = ifs.tellg();
+
+  data_ = vector<uint8_t>(pos);
+
+  ifs.seekg(0, ios::beg);
+  ifs.read(reinterpret_cast<char *>(&data_[0]), pos);
+
+  createSpritesFromData();
+}
 
 Chr::Chr(const std::vector<uint8_t> &data, const Header &header) {
   data_.resize(header.chr_size(), 0);
@@ -19,9 +39,7 @@ Chr::Chr(const std::vector<uint8_t> &data, const Header &header) {
 
   memcpy(data_.data(), data.data() + offset, header.chr_size());
 
-  for (auto i = 0; i < data_.size() / 16; i++){
-    sprites_.push_back(Sprite(8, 8, data_.data() + i * 16));
-  }
+  createSpritesFromData();
 }
 
 std::vector<Sprite>& Chr::sprites() {
@@ -38,4 +56,24 @@ void Chr::applyChanges() {
 
 std::vector<uint8_t>& Chr::data() {
   return data_;
+}
+
+void Chr::createSpritesFromData() {
+  for (auto i = 0; i < data_.size() / 16; i++){
+    sprites_.push_back(Sprite(8, 8, data_.data() + i * 16));
+  }
+}
+
+void Chr::save(){
+  if(file_path_ == ""){
+    throw runtime_error("Trying to save Chr with empty path");
+  }
+  applyChanges();
+  ofstream ofs(file_path_, ios::binary);
+
+  if(!ofs.is_open()){
+    throw runtime_error("Failed to save.");
+  }
+
+  ofs.write(reinterpret_cast<char *>(data_.data()), data_.size());
 }

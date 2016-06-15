@@ -11,6 +11,7 @@
 
 class SpritePicker;
 class Rom;
+class Chr;
 
 /*!
  * \brief The PaintView class
@@ -19,12 +20,14 @@ class Rom;
 
 class PaintView : public View {
 public:
-  PaintView(Engine &engine, Rom& rom);
+  PaintView(Engine &engine, std::unique_ptr<Rom> &&rom);
+  PaintView(Engine &engine, std::unique_ptr<Chr> &&chr);
   ~PaintView();
   virtual View::Action render() override;
 
 private:
-  Rom& rom_;
+  std::unique_ptr<Rom> rom_;
+  std::unique_ptr<Chr> chr_;
   std::vector<Sprite> &sprites_;
   ColorPicker color_picker_;
   SpriteEditor sprite_editor_;
