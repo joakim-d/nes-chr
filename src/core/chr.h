@@ -11,7 +11,7 @@ class Header;
 
 class Chr {
 public:
-  Chr(const std::string &file_path);
+  Chr(const std::string &file_path, bool create, uint32_t size = 0);
   Chr(const std::vector<uint8_t> &data, const Header &header);
 
   std::vector<Sprite>& sprites();

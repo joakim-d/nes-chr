@@ -1,25 +1,45 @@
 #include "chr.h"
 #include "header.h"
+
 #include <stdexcept>
 #include <string.h>
 #include <iostream>
 #include <fstream>
-
+#include <sstream>
 using namespace std;
 
-Chr::Chr(const std::string &file_path) : file_path_(file_path) {
-  ifstream ifs(file_path, ios::binary|ios::ate);
+Chr::Chr(const std::string &file_path, bool create, uint32_t size) : file_path_(file_path) {
+  if(create){
+    size *= 8192;
+    if(size == 0 || size > 8192 * 16){
+      std::stringstream ss;
+      ss << "Can't create chr file of size " << size << " bytes";
 
-  if(!ifs.is_open()){
-    throw runtime_error("Failed to open " + file_path);
+      throw runtime_error(ss.str());
+    }
+    ofstream ofs(file_path, ios::binary|ios::ate);
+
+    if(!ofs.is_open()){
+      throw runtime_error("Failed to create + file_path");
+    }
+
+    data_.resize(size, 0);
+    ofs.write(reinterpret_cast<char *>(data_.data()), data_.size());
   }
+  else{
+    ifstream ifs(file_path, ios::binary|ios::ate);
 
-  ifstream::pos_type pos = ifs.tellg();
+    if(!ifs.is_open()){
+      throw runtime_error("Failed to open " + file_path);
+    }
 
-  data_ = vector<uint8_t>(pos);
+    ifstream::pos_type pos = ifs.tellg();
 
-  ifs.seekg(0, ios::beg);
-  ifs.read(reinterpret_cast<char *>(&data_[0]), pos);
+    data_ = vector<uint8_t>(pos);
+
+    ifs.seekg(0, ios::beg);
+    ifs.read(reinterpret_cast<char *>(&data_[0]), pos);
+  }
 
   createSpritesFromData();
 }
